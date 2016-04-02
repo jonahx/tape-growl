@@ -1,0 +1,33 @@
+{
+  "name": "tape-growl",
+  "version": "1.0.0",
+  "description": "Accepts TAP output from stdin and creates growl notifications",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --harmony --harmony-destructuring node_modules/tape-watch/bin/tape-watch -o '| bash -c \"tee >(./tape-growl.js)\" | faucet' test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jonahx/tape-growl.git"
+  },
+  "keywords": [
+    "tape",
+    "tape-watch",
+    "growl"
+  ],
+  "author": "jonahx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jonahx/tape-growl/issues"
+  },
+  "homepage": "https://github.com/jonahx/tape-growl#readme",
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "4.5.1",
+    "tape-watch": "1.3.0"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "tape-growl": "tape-growl.js"
+  }
+}
