@@ -1,27 +1,38 @@
 #!/usr/bin/env node --harmony --harmony-destructuring
-var exec = require('child_process').exec;
+var exec     = require('child_process').exec,
+    debounce = require('lodash.debounce'),
+    debouncedNotifyGrowl = debounce(notifyGrowl, 50),
+    data = '';
 
-var data = '';
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
-process.stdin.on('data', chunk => data += chunk);
-process.stdin.on('end', () => notifyGrowl(data));
+process.stdin.on('data', chunk => {
+  data += chunk;
+  debouncedNotifyGrowl();
+})
+process.stdin.on('end', debouncedNotifyGrowl);
 
-function notifyGrowl(tap) {
+function notifyGrowl() {
+  tap = data;
   var failures = failuresFromTap(tap),
       msg      = failures ? failures   : 'Success',
       icon     = failures ? 'fail.png' : 'success.png',
       iconPath = __dirname + '/icons/' + icon,
       growlCmd = `growlnotify --image ${iconPath} -m ${msg}`;
 
-  exec(growlCmd, {shell: '/bin/bash'});
+  // console.log('--------------------');
+  // console.log(failures);
+  exec(growlCmd);
+  data = '';
 }
 
 function failuresFromTap(tap) {
   var failures = tap.split("\n")
-                    .filter(x => x.match(/^not ok/))
+                    .filter(x => x.match(/^not ok|\w+Error|    at/))
                     .map(x => x.replace(/^not ok \d+/, ''))
-                    .map(x => `"${x}"`)
-  return failures.length ? failures.join("$'\n'") : null;
+                    // .map(x => `"${x}"`)
+                    .map(x => `${x}`)
+  // return failures.length ? failures.join("$'\n'") : null;
+  return failures.length ? failures.join("\n") : null;
 }
