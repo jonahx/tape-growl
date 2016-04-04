@@ -1,20 +1,38 @@
 #!/usr/bin/env node --harmony --harmony-destructuring
 var exec     = require('child_process').exec,
     debounce = require('lodash.debounce'),
-    debouncedNotifyGrowl = debounce(notifyGrowl, 50),
-    data = '';
+    debouncedTap = debounce(notifyTap, 50),
+    debouncedError = debounce(notifyError, 50),
+    tap = '';
+    error = '';
 
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', chunk => {
-  data += chunk;
-  debouncedNotifyGrowl();
+  tap += chunk;
+  debouncedTap();
 })
-process.stdin.on('end', debouncedNotifyGrowl);
+process.stdin.on('end', debouncedTap);
 
-function notifyGrowl() {
-  tap = data;
+
+process.stderr.resume();
+process.stderr.setEncoding('utf8');
+process.stderr.on('data', chunk => {
+  error += chunk;
+  debouncedNotifyError();
+})
+
+function notifyError() {
+  var msg      = error,
+      iconPath = __dirname + '/icons/fail.png',
+      growlCmd = `growlnotify --image ${iconPath} -m ${msg}`;
+
+  exec(growlCmd);
+  error = '';
+}
+
+function notifyTap() {
   var failures = failuresFromTap(tap),
       msg      = failures ? failures   : 'Success',
       icon     = failures ? 'fail.png' : 'success.png',
@@ -24,7 +42,7 @@ function notifyGrowl() {
   // console.log('--------------------');
   // console.log(failures);
   exec(growlCmd);
-  data = '';
+  tap = '';
 }
 
 function failuresFromTap(tap) {
