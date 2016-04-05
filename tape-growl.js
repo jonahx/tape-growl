@@ -23,7 +23,7 @@ process.stdin.on('end', debouncedGrowlAlert);
 function showGrowlAlert() {
   var growlCmd = growlCommand(extractFailureLines(stdin));
   exec(growlCmd);
-  console.log(pureTap(stdin)); // pipe through only TAP
+  console.log(stdin); // pipe through
   stdin = '';
 }
 

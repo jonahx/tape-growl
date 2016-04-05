@@ -4,7 +4,7 @@
   "description": "Accepts TAP output from stdin and creates growl notifications",
   "main": "index.js",
   "scripts": {
-    "test": "node --harmony --harmony-destructuring node_modules/tape-watch/bin/tape-watch -o '| bash -c \"tee >(./tape-growl.js)\" >&1' test/index.js"
+    "test": "node node_modules/tape-watch/bin/tape-watch test/index.js 2>&1 | node ./tape-growl.js | tap-spec"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   "homepage": "https://github.com/jonahx/tape-growl#readme",
   "devDependencies": {
     "faucet": "0.0.1",
+    "tap-spec": "4.1.1",
     "tape": "4.5.1",
     "tape-watch": "1.3.0"
   },

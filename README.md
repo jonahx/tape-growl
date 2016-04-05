@@ -28,12 +28,16 @@ Say your project has a `test` folder, which includes `index.js`, a main entry po
 
     ...
     "scripts": {
-      "test": "node node_modules/tape-watch/bin/tape-watch test/index.js 2>&1 | tape-growl | faucet"
+      "test": "node node_modules/tape-watch/bin/tape-watch test/index.js 2>&1 | tape-growl | tap-spec"
     },
     ...
 
-This will turn on growl notifications and give you `faucet`-formatted output to the command line, should you need to see additional output.  Of course, you could remove `| faucet` for the raw TAP output.
+This will turn on growl notifications and give you `tap-spec`-formatted output to the command line, should you need to see additional output.  Of course, you could remove `| tap-spec` for the raw TAP output.
 
 ## additional notes
 
 The `2>&1`, which combines stderr and stdout, is needed, eg, to catch syntax errors which will not be listed as TAP failures, but which you probably want to consider "red" in your TDD flow.
+
+## recommended formatter
+
+`tap-spec` is the recommended formatter, since it handles syntax error output gracefully, displaying it along with the formatted TAP output.  Some other TAP formatters will swallow up errors.
