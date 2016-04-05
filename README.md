@@ -28,8 +28,12 @@ Say your project has a `test` folder, which includes `index.js`, a main entry po
 
     ...
     "scripts": {
-      "test": "node --harmony --harmony-destructuring node_modules/tape-watch/bin/tape-watch -o '| bash -c \"tee >(tape-growl)\" | faucet' test/index.js"
+      "test": "node node_modules/tape-watch/bin/tape-watch test/index.js 2>&1 | tape-growl | faucet"
     },
     ...
 
-This will turn on growl notifications and give you `faucet`-formatted output to the command line, should you need to see additional output.  Of course, you could replace `| faucet` with ` >&1` for the raw TAP output.  Or you could include neither, and rely solely on the terse growl info.
+This will turn on growl notifications and give you `faucet`-formatted output to the command line, should you need to see additional output.  Of course, you could remove `| faucet` for the raw TAP output.
+
+## additional notes
+
+The `2>&1`, which combines stderr and stdout, is needed, eg, to catch syntax errors which will not be listed as TAP failures, but which you probably want to consider "red" in your TDD flow.
