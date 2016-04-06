@@ -16,7 +16,8 @@ process.stdin.resume();
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', chunk => {
   stdin += chunk;
-  debouncedGrowlAlert();
+  if (stdin.match(/^# fail|    at |# ok/m))
+    debouncedGrowlAlert()
 })
 process.stdin.on('end', debouncedGrowlAlert);
 
