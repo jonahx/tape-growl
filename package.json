@@ -1,6 +1,6 @@
 {
   "name": "tape-growl",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Accepts TAP output from stdin and creates growl notifications",
   "main": "index.js",
   "scripts": {
