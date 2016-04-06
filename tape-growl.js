@@ -16,7 +16,9 @@ process.stdin.resume();
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', chunk => {
   stdin += chunk;
-  if (stdin.match(/^# fail|    at |# ok/m))
+  var hasNonWhitespace = stdin.match(/\S/),
+      hasEndMarker     = stdin.match(/^# fail|    at |# ok/m);
+  if (hasNonWhitespace && hasEndMarker)
     debouncedGrowlAlert()
 })
 process.stdin.on('end', debouncedGrowlAlert);
