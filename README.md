@@ -28,7 +28,7 @@ Say your project has a `test` folder, which includes `index.js`, a main entry po
 
     ...
     "scripts": {
-      "test": "node node_modules/tape-watch/bin/tape-watch test/index.js 2>&1 | tape-growl | tap-spec"
+      "test": "tape-watch test/index.js 2>&1 | tape-growl | tap-spec"
     },
     ...
 
