@@ -1,4 +1,4 @@
-#!/usr/bin/env node --harmony --harmony-destructuring
+#!/usr/bin/env node --harmony
 var data = '';
 
 process.stdin.resume();

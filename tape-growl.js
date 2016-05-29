@@ -1,4 +1,4 @@
-#!/usr/bin/env node --harmony --harmony-destructuring
+#!/usr/bin/env node --harmony
 
 var exec     = require('child_process').exec,
     debounce = require('lodash.debounce'),

@@ -4,7 +4,7 @@
   "description": "Accepts TAP output from stdin and creates growl notifications",
   "main": "index.js",
   "scripts": {
-    "test": "node node_modules/tape-watch/bin/tape-watch test/index.js 2>&1 | node ./tape-growl.js | tap-spec"
+    "test": "tape-watch test/index.js 2>&1 | node ./tape-growl.js | tap-spec"
   },
   "repository": {
     "type": "git",
